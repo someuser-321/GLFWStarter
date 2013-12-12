@@ -36,11 +36,11 @@ double tv0, Tdel;
 float rot_x, rot_y;
 float pos_x, pos_y, pos_z;
 
-bool captureCursor = true;
+bool capture_cursor = true;
 
 float movement_speed = MOVEMENT_SPEED;
 float turn_speed = TURN_SPEED;
-bool speedIncreased = false;
+bool speed_increased = false;
 
 
 void setup();
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
     glfwWindowHint(GLFW_SAMPLES, FXAA_SAMPLES);
 
-    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "JAM Test", NULL, NULL);
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "This is a window title...", NULL, NULL);
     if ( !window )
     {
         glfwTerminate();
@@ -137,7 +137,7 @@ void step()
     get_input(window);
 
     char title[64];
-    sprintf(title, "JAM Test @ %.1f FPS", (float)getFPS());
+    sprintf(title, "This is a window title... @ %.1f FPS", (float)getFPS());
     glfwSetWindowTitle(window, title);
 }
 
@@ -165,12 +165,12 @@ void get_input()
         pos_z += DSIN(rot_y) * movement_speed * Tdel;
     }
     if ( glfwGetKey(window, 'E') == GLFW_PRESS ) {
-        if ( captureCursor ) {
+        if ( capture_cursor ) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            captureCursor = false;
+            capture_cursor = false;
         } else {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-            captureCursor = true;
+            capture_cursor = true;
         }
 
         sleepytime(31415926);
@@ -196,15 +196,15 @@ void get_input()
     if ( glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ) {
         pos_y -= movement_speed * Tdel;
     }
-    if ( glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS && !speedIncreased ) {
+    if ( glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS && !speed_increased ) {
         movement_speed *= MOVEMENT_MULTIPLIER;
-        speedIncreased = true;
-    } else if ( glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE && speedIncreased ) {
+        speed_increased = true;
+    } else if ( glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE && speed_increased ) {
         movement_speed  = MOVEMENT_SPEED;
-        speedIncreased = false;
+        speed_increased = false;
     }
 
-    if ( captureCursor ) {
+    if ( capture_cursor ) {
         double x_pos, y_pos;
         glfwGetCursorPos(window, &x_pos, &y_pos);
         int width, height;
